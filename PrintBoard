@@ -1,0 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace chess
+{
+    class PrintBoard
+    {
+        public static void updateBoard(string[][] str)
+        {
+
+        }
+
+        public static void initBoard()
+        {
+            int width = 8;
+            int length = 8;
+            string[] board = { "WR/WN/Wb/WQ/WK/Wb/WN/WR","WP/WP/WP/WP/WP/WP/WP/WP", 
+                               "ES/ES/ES/ES/ES/ES/ES/ES","ES/ES/ES/ES/ES/ES/ES/ES",
+                               "ES/ES/ES/ES/ES/ES/ES/ES", "ES/ES/ES/ES/ES/ES/ES/ES", 
+                               "BP/BP/BP/BP/BP/BP/BP/BP", "BR/BN/Bb/BQ/BK/Bb/BN/BR"
+            };
+            for (int i = 0; i < 8;i++)
+            {
+                string row = board[i];
+                bool colorWhite = false;
+                foreach(char c in row)
+                {
+                    switch (c)
+                    {
+                        //instantiate each square, use a letter to write the char of the piece and make it  black or white depending on color
+                        //boom ez chess bois
+                        case 'W':
+                            colorWhite = true;
+                            break;
+                        case 'B':
+                            colorWhite = false;
+                            break;
+                        case 'P':
+                            break;
+
+                    }
+
+                }
+            }
+            
+
+
+        }
+    }
+}
