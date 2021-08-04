@@ -6,7 +6,8 @@ namespace chess
     {
         static void Main(string[] args)
         {
-
+            string[] board = PrintBoard.initBoard();
+            PrintBoard.updateBoard(board, "G2", "G4");
         }
     }
 }
