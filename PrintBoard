@@ -4,28 +4,136 @@ using System.Text;
 
 namespace chess
 {
-    class PrintBoard
+   public class PrintBoard
     {
-        public static void updateBoard(string[][] str)
+        public static void updateBoard(string[] board, string sq1, string sq2)
         {
+            //example sq1: a7
+            //example sq2: a2
+            char row = sq1[1];
+            char col = sq1[0];
+
+            int i = 0;
+            int j = 0;
+            string sub = "";
+            string pieceAtSQ1 = "";
+            int count = 0;
+            bool appliedES = false;
+            foreach (char c in board[(int)(row - 48)])
+            {
+                i++;
+
+                
+                switch (c)
+                {
+                    case '/':
+                        j++;
+                        break;
+                    default:
+                        break;
+                }
+               
+                if(j == (int)(col - 65) && !appliedES)
+                {
+                    sub += "ES/";
+                    count = 2;
+                    appliedES = true;
+                    Console.WriteLine(board[(int)(row - 48)].Length);
+                    Console.WriteLine(i + 1);
+                    pieceAtSQ1 = board[(int)(row - 48)].Substring(i - 1, i + 1);
+                }
+                else if(count > 0)
+                {
+                    count--;
+                }
+                else
+                {
+                    sub += c;
+                }
+            }
+            Console.WriteLine("sub = " + sub);
+
+            row = sq2[1];
+            col = sq2[0];
+
+
+            i = 0;
+            j = 0;
+            string sub2 = "";
+            string pieceAtSQ2 = "";
+            count = 0;
+            appliedES = false;
+            foreach (char c in board[(int)(row - 48)])
+            {
+                i++;
+
+
+                switch (c)
+                {
+                    case '/':
+                        j++;
+                        break;
+                    default:
+                        break;
+                }
+
+                if (j == (int)(col - 65) && !appliedES)
+                {
+                    sub2 += pieceAtSQ1 + "/";
+                    count = 2;
+                    appliedES = true;
+
+                    pieceAtSQ2 = board[(int)(row - 48)].Substring(i - 1, i + 1);
+                }
+                else if (count > 0)
+                {
+                    count--;
+                }
+                else
+                {
+                    sub2 += c;
+                }
+            }
+            Console.WriteLine("sub2 = " + sub2);
+            Console.WriteLine(pieceAtSQ2);
+
+
 
         }
 
-        public static void initBoard()
+        public static string[] initBoard()
         {
-            int width = 8;
-            int length = 8;
-            string[] board = { "WR/WN/Wb/WQ/WK/Wb/WN/WR","WP/WP/WP/WP/WP/WP/WP/WP", 
-                               "ES/ES/ES/ES/ES/ES/ES/ES","ES/ES/ES/ES/ES/ES/ES/ES",
-                               "ES/ES/ES/ES/ES/ES/ES/ES", "ES/ES/ES/ES/ES/ES/ES/ES", 
-                               "BP/BP/BP/BP/BP/BP/BP/BP", "BR/BN/Bb/BQ/BK/Bb/BN/BR"
+
+            string[] board = { "WR/WN/Wb/WQ/WK/Wb/WN/WR/", "WP/WP/WP/WP/WP/WP/WP/WP/",
+                               "ES/ES/ES/ES/ES/ES/ES/ES/", "ES/ES/ES/ES/ES/ES/ES/ES/",
+                               "ES/ES/ES/ES/ES/ES/ES/ES/", "ES/ES/ES/ES/ES/ES/ES/ES/",
+                               "BP/BP/BP/BP/BP/BP/BP/BP/", "BR/BN/Bb/BQ/BK/Bb/BN/BR/"
             };
-            for (int i = 0; i < 8;i++)
+            for (int i = 0; i < 8; i++)
             {
                 string row = board[i];
                 bool colorWhite = false;
-                foreach(char c in row)
+                string output = "";
+                int j = i;
+                foreach (char c in row)
                 {
+                    
+                    if (j % 2 == 0)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+
+                                                                                    
+
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.Green;
+
+
+
+                    }
+                    j++;
+
                     switch (c)
                     {
                         //instantiate each square, use a letter to write the char of the piece and make it  black or white depending on color
@@ -36,16 +144,34 @@ namespace chess
                         case 'B':
                             colorWhite = false;
                             break;
-                        case 'P':
+                        case 'E':
+                        case 'S':
                             break;
-
+                        case '/':
+                            if(colorWhite)
+                            {
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
+                            else Console.ForegroundColor = ConsoleColor.Black;
+                            Console.Write(output.ToUpper().PadRight(((Console.WindowWidth - 1) / 20)));
+                            // Reset the color.
+                            Console.ResetColor();
+                            output = "";
+                            colorWhite = false;
+                            break;
+                        default:
+                            output += c;
+                            break;
                     }
 
+
+
                 }
+                Console.WriteLine();
             }
-            
 
 
+            return board;
         }
     }
 }
